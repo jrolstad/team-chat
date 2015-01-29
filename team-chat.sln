@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "team-chat", "team-chat\team-chat.csproj", "{2AE24CAB-7442-4D33-AF6C-6580BFA3CE26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "team-chat", "team-chat\team-chat.csproj", "{75F89989-CE48-4A91-9EE2-41BD77271F68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2AE24CAB-7442-4D33-AF6C-6580BFA3CE26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AE24CAB-7442-4D33-AF6C-6580BFA3CE26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AE24CAB-7442-4D33-AF6C-6580BFA3CE26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AE24CAB-7442-4D33-AF6C-6580BFA3CE26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75F89989-CE48-4A91-9EE2-41BD77271F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75F89989-CE48-4A91-9EE2-41BD77271F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75F89989-CE48-4A91-9EE2-41BD77271F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75F89989-CE48-4A91-9EE2-41BD77271F68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
