@@ -9,15 +9,10 @@ namespace team_chat
         {
             var userName = GetUserName();
             Clients.All.broadcastMessage(userName, message);
-
-            _dbContext.Messages.Add(message);
-            saveChanges
         }
 
         public override Task OnConnected()
         {
-            var messages = _dbContext.Messages();
-
             this.Clients.Caller.broadcastMessage("foo", "connection message");
 
             return base.OnConnected();
