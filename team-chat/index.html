@@ -71,35 +71,49 @@
 
 
     <!--Add script to update the page and send messages.-->
-    <script type="text/javascript">
-        $(function () {
-            // Declare a proxy to reference the hub.
-            var chat = $.connection.chatHub;
-            // Create a function that the hub can call to broadcast messages.
-            chat.client.broadcastMessage = function (message) {
-                // Html encode display name and message.
-                var encodedName = $('<div />').text(message.Sender).html();
-                var encodedMsg = $('<div />').text(message.Message).html();
+<script type="text/javascript">
+    function addMessageToTable(message) {
+        // Html encode display name and message.
+        var encodedName = $('<div />').text(message.Sender).html();
+        var encodedMsg = $('<div />').text(message.Message).html();
 
-                var sentAt = new Date(message.SentAt);
-                var sentAtDisplay = sentAt.toLocaleDateString() + " " + sentAt.toLocaleTimeString();
-                var encodedSentAt = $('<div />').text(sentAtDisplay).html();
-                // Add the message to the page.
+        var sentAt = new Date(message.SentAt);
+        var sentAtDisplay = sentAt.toLocaleDateString() + " " + sentAt.toLocaleTimeString();
+        var encodedSentAt = $('<div />').text(sentAtDisplay).html();
+        // Add the message to the page.
 
-                $('#discussionTableContent').append('<tr><td>' + encodedName + '</td><td>' + encodedMsg + '</td><td>' + encodedSentAt + '</td></tr>');
-            };
-            // Set initial focus to message input box.
-            $('#message').focus();
-            // Start the connection.
-            $.connection.hub.start().done(function () {
-                $('#sendmessage').click(function () {
-                    // Call the Send method on the hub.
-                    chat.server.send($('#message').val());
-                    // Clear text box and reset focus for next comment.
-                    $('#message').val('').focus();
-                });
+        $('#discussionTableContent').append('<tr><td>' + encodedName + '</td><td>' + encodedMsg + '</td><td>' + encodedSentAt + '</td></tr>');
+    }
+
+    function clearMessageTable() {
+        $('#discussionTableContent').empty();
+    }
+
+    $(function () {
+        // Declare a proxy to reference the hub.
+        var chat = $.connection.chatHub;
+        // Create a function that the hub can call to broadcast messages.
+        chat.client.broadcastMessage = function (message) {
+            addMessageToTable(message);
+        };
+
+        chat.client.resetMessages = function () {
+            clearMessageTable();
+        };
+
+        // Set initial focus to message input box.
+        $('#message').focus();
+
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+            $('#sendmessage').click(function () {
+                // Call the Send method on the hub.
+                chat.server.send($('#message').val());
+                // Clear text box and reset focus for next comment.
+                $('#message').val('').focus();
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

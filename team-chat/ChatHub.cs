@@ -33,14 +33,27 @@ namespace team_chat
 
         public override Task OnConnected()
         {
-            foreach (var message in _dbContext.ChatMessages)
-            {
-                this.Clients.Caller.broadcastMessage(message);
-            }
+            BroadcastAllMessages();
 
             return base.OnConnected();
         }
 
+        public override Task OnReconnected()
+        {
+            this.Clients.Caller.resetMessages();
+            BroadcastAllMessages();
+
+
+            return base.OnReconnected();
+        }
+
+        private void BroadcastAllMessages()
+        {
+            foreach (var message in _dbContext.ChatMessages)
+            {
+                this.Clients.Caller.broadcastMessage(message);
+            }
+        }
         private string GetUserName()
         {
             var userName = "N/A";
