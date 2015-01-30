@@ -24,7 +24,7 @@ namespace team_chat
         public void Send(string message)
         {
             var userName = GetUserName();
-            var chatMessage = new ChatMessage {Sender = userName, Message = message, SentAt = DateTime.Now};
+            var chatMessage = new ChatMessage {Sender = userName, Message = message, SentAt = DateTime.UtcNow};
             Clients.All.broadcastMessage(chatMessage);
 
             _dbContext.ChatMessages.Add(chatMessage);
