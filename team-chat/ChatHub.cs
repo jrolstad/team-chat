@@ -33,9 +33,9 @@ namespace team_chat
 
         public override Task OnConnected()
         {
-            foreach (var mesage in _dbContext.ChatMessages)
+            foreach (var message in _dbContext.ChatMessages)
             {
-                this.Clients.Caller.broadcastMessage(mesage);
+                this.Clients.Caller.broadcastMessage(message);
             }
 
             return base.OnConnected();

@@ -35,9 +35,10 @@
                 // Html encode display name and message.
                 var encodedName = $('<div />').text(message.Sender).html();
                 var encodedMsg = $('<div />').text(message.Message).html();
+                var encodedSentAt = $('<div />').text(message.SentAt).html();
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + encodedName
-                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+                    + '</strong>:&nbsp;&nbsp;(' + encodedSentAt + ')&nbsp;' + encodedMsg + ' </li>');
             };
             // Set initial focus to message input box.
             $('#message').focus();
