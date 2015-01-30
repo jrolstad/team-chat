@@ -95,10 +95,13 @@
         // Create a function that the hub can call to broadcast messages.
         chat.client.broadcastMessage = function (message, showNotification) {
             addMessageToTable(message);
-
             if (showNotification) {
                 Notification.requestPermission(function (permission) {
                     var notification = new Notification(message.Sender, { body: message.Message });
+                    
+                    setTimeout(function () {
+                        notification.close();
+                    }, '15000');
                 });
             }
         };
