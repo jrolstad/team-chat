@@ -93,8 +93,14 @@
         // Declare a proxy to reference the hub.
         var chat = $.connection.chatHub;
         // Create a function that the hub can call to broadcast messages.
-        chat.client.broadcastMessage = function (message) {
+        chat.client.broadcastMessage = function (message, showNotification) {
             addMessageToTable(message);
+
+            if (showNotification) {
+                Notification.requestPermission(function (permission) {
+                    var notification = new Notification(message.Sender, { body: message.Message });
+                });
+            }
         };
 
         chat.client.resetMessages = function () {
