@@ -24,9 +24,10 @@ namespace team_chat
         public void Send(string message)
         {
             var userName = GetUserName();
-            Clients.All.broadcastMessage(userName, message);
+            var chatMessage = new ChatMessage {Sender = userName, Message = message, SentAt = DateTime.Now};
+            Clients.All.broadcastMessage(chatMessage);
 
-            _dbContext.ChatMessages.Add(new ChatMessage {Sender = userName, Message = message, SentAt = DateTime.Now});
+            _dbContext.ChatMessages.Add(chatMessage);
             _dbContext.SaveChanges();
         }
 
@@ -34,7 +35,7 @@ namespace team_chat
         {
             foreach (var mesage in _dbContext.ChatMessages)
             {
-                this.Clients.Caller.broadcastMessage(mesage.Sender,mesage.Message);
+                this.Clients.Caller.broadcastMessage(mesage);
             }
 
             return base.OnConnected();
