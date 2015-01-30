@@ -118,6 +118,14 @@
                 // Clear text box and reset focus for next comment.
                 $('#message').val('').focus();
             });
+
+            $('#message').keypress(function(e) {
+                if (e.which == 13) {
+                    chat.server.send($('#message').val());
+                    $('#message').val('').focus();
+                }
+            });
+          
         });
     });
 </script>
