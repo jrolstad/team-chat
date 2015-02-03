@@ -89,48 +89,62 @@
         $('#discussionTableContent').empty();
     }
 
+    function sendMessage(chatHub) {
+        // Call the Send method on the hub.
+        chatHub.server.send($('#message').val());
+
+        // Clear text box and reset focus for next comment.
+        $('#message').val('').focus();
+    }
+
+    function notifyMessageReceived(message) {
+        Notification.requestPermission(function (permission) {
+            var notification = new Notification(message.Sender, { body: message.Message });
+
+            setTimeout(function () {
+                notification.close();
+            }, '15000');
+        });
+    }
+
+    function scrollToBottomOfPage() {
+        window.scroll(0, $(document).height());
+    }
+
     $(function () {
+        // Set initial focus to message input box.
+        $('#message').focus();
+
         // Declare a proxy to reference the hub.
         var chat = $.connection.chatHub;
+
         // Create a function that the hub can call to broadcast messages.
         chat.client.broadcastMessage = function (message, showNotification) {
+
             addMessageToTable(message);
             if (showNotification) {
-                Notification.requestPermission(function (permission) {
-                    var notification = new Notification(message.Sender, { body: message.Message });
-                    
-                    setTimeout(function () {
-                        notification.close();
-                    }, '15000');
-                });
+                notifyMessageReceived(message);
             }
-
-            window.scroll(0, $(document).height());
+            scrollToBottomOfPage();
         };
 
         chat.client.resetMessages = function () {
             clearMessageTable();
         };
 
-        // Set initial focus to message input box.
-        $('#message').focus();
-
-        // Start the connection.
-        $.connection.hub.start().done(function () {
-            $('#sendmessage').click(function () {
-                // Call the Send method on the hub.
-                chat.server.send($('#message').val());
-                // Clear text box and reset focus for next comment.
-                $('#message').val('').focus();
+        // Start the connection.  Wait until its started to be able to send anything
+        $.connection.hub.start()
+            .done(function () {
+                $('#sendmessage').click(function () {
+                    sendMessage(chat);
+                });
             });
 
-            $('#message').keypress(function(e) {
-                if (e.which == 13) {
-                    chat.server.send($('#message').val());
-                    $('#message').val('').focus();
-                }
-            });
-          
+        $('#message').keypress(function (e) {
+            var enterKey = 13;
+            if (e.which === enterKey) {
+                sendMessage(chat);
+            }
         });
     });
 </script>
