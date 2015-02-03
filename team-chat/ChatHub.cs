@@ -34,7 +34,7 @@ namespace team_chat
             BroadcastMessageToClient(callingClient,chatMessage,ShowNotification.No);
 
             dynamic allClientsExceptCaller = Clients.AllExcept(Context.ConnectionId);
-            BroadcastMessageToClient(allClientsExceptCaller, chatMessage, ShowNotification.No);
+            BroadcastMessageToClient(allClientsExceptCaller, chatMessage, ShowNotification.Yes);
             
             _dbContext.ChatMessages.Add(chatMessage);
             _dbContext.SaveChanges();
