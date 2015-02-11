@@ -50,13 +50,23 @@
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container form-inline">
-            <div class="input-group">
-                <input type="text" id="message" class="input input-lg" autocomplete="off" />
-                &nbsp;
-                <input type="button" id="sendmessage" class="btn btn-primary btn-lg" value="Send" />
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <input type="text" id="message" class="input input-lg" autocomplete="off" />
+                        &nbsp;
+                        <input type="button" id="sendmessage" class="btn btn-primary btn-lg" value="Send" />
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <h2 id="statusMessage" class="bg-info"></h2>
+                </div>
+
             </div>
+               
 
         </div>
+       
     </nav>
 
     <!--<footer class="footer">
@@ -114,6 +124,7 @@
     $(function () {
         // Set initial focus to message input box.
         $('#message').focus();
+        $('#statusMessage').text('Loading...');
 
         // Declare a proxy to reference the hub.
         var chat = $.connection.chatHub;
@@ -135,6 +146,8 @@
             });
 
             scrollToBottomOfPage();
+
+            $('#statusMessage').text('');
         };
 
         chat.client.resetMessages = function () {
