@@ -80,11 +80,8 @@ namespace team_chat
 
         private void BroadcastMessagesToClient(dynamic client, IEnumerable<ChatMessage> messages)
         {
-            foreach (var message in messages)
-            {
-                client.broadcastMessage(message, ShowNotification.No);
-            }
-            
+            var messageArray = messages.ToArray();
+            client.broadcastMessages(messageArray);
         }
 
         private string GetUserName()

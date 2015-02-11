@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -130,6 +131,12 @@ namespace team_chat.tests.SignalRHubs
                 client.sentMessage = message;
                 client.notificationShown = showNotification;
                 client.sentMessageCount++;
+            });
+
+            client.broadcastMessages = new Action<IEnumerable<ChatMessage>>((messages) =>
+            {
+                client.notificationShown = false;
+                client.sentMessageCount += messages.Count();
             });
 
             client.resetMessages = new Action (() =>
